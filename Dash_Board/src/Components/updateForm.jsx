@@ -49,6 +49,7 @@ function UpdateForm({ productId: propProductId, onCancel, onUpdated }) {
       if (onUpdated) {
         
         onUpdated(result.product || result);
+		 navigate(-1)
       }
       
       if (!onUpdated) {

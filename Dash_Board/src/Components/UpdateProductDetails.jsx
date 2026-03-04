@@ -12,11 +12,7 @@ function UpdatePageDetails() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				if (!id) {
-					setError('No product ID provided');
-					setLoading(false);
-					return;
-				}
+				
 				const data = await GetProductWithId(id);
 				setProduct(data);
 			} catch (err) {
@@ -68,7 +64,7 @@ function UpdatePageDetails() {
 				</div>
 			</div>
 
-			<UpdateForm
+			<UpdateForm	
 				productId={id}
 				onCancel={() => window.history.back()}
 				onUpdated={(updated) => {

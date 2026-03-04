@@ -5,6 +5,7 @@ import Product from '../Pages/Product';
 import AddProduct from '../Pages/AddProduct';
 import Update from '../Pages/Update';
 import UpdatePageDetails from './UpdateProductDetails';
+import Delete from './Delete';
 
 function Main() {
 	return (
@@ -29,6 +30,10 @@ function Main() {
 				<Route
 					path="/updateProductDetails/:id"
 					element={<UpdatePageDetails />}
+				/>
+				<Route
+					path="/Delete/:id"
+					element={<Delete />}
 				/>
 			</Routes>
 		</div>

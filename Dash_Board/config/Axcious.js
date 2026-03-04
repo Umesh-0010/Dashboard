@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { data } from 'react-router-dom';
+
 
 const axiosInstance = axios.create({
 	baseURL: 'http://localhost:3000',
@@ -41,7 +41,7 @@ export const GetProductWithId = async (id) => {
 	}
 };
 
-// Frontend function to update a product
+
 export const updateProductWithId = async (id, updatedData) => {
   if (!id) {
     throw new Error('Product id is required');
@@ -49,9 +49,26 @@ export const updateProductWithId = async (id, updatedData) => {
 
   try {
     const response = await axiosInstance.put(`/admin/products/${id}`, updatedData);
+	alert("data update success fully")
     return response.data; 
   } catch (error) {
     console.error('Error updating product:', error.response || error.message);
     throw error;
   }
 };
+
+export const DeleteProduct = async (id) =>{
+	  if (!id) {
+    throw new Error('Product id is required');
+  }
+
+  try {
+    const response = await axiosInstance.delete(`/admin/products/${id}`);
+    alert("Product deleted successfully");
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting product:', error.response || error.message);
+    throw error;
+  }
+
+}

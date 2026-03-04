@@ -7,14 +7,13 @@ function UpdatePage() {
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const data = await GetProduct();
 				console.log(data);
-				
+
 				setProducts(data);
 			} catch (error) {
 				setError('Failed to load products.');
@@ -37,8 +36,6 @@ function UpdatePage() {
 	if (error) {
 		return <div>{error}</div>;
 	}
-
-	
 
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-3 gap-6 overflow-hidden">
@@ -69,13 +66,20 @@ function UpdatePage() {
 						</span>
 					</div>
 
-					<div
-						onClick={() => {navigate(`/updateProductDetails/${product.id}`)}}
-						className="flex gap-4">
-						<button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+					<div className="flex gap-4">
+						<button
+							onClick={() => {
+								navigate(`/updateProductDetails/${product.id}`);
+							}}
+							className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
 							Update
 						</button>
-						<button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+
+						<button
+							onClick={() => {
+								navigate(`/Delete/${product.id}`);
+							}}
+							className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
 							Delete
 						</button>
 					</div>

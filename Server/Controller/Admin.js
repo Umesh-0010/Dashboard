@@ -45,7 +45,6 @@ export const getAllProducts = async (req, res) => {
 
 export const getAProducts = async (req, res) => {
 	const { id } = req.params;
-	
 
 	try {
 		const result = await pool.query(
@@ -65,11 +64,11 @@ export const getAProducts = async (req, res) => {
 };
 
 export const updateProduct = async (req, res) => {
-  const { id } = req.params;
-  const { name, price, description, image, quantity } = req.body;
+	const { id } = req.params;
+	const { name, price, description, image, quantity } = req.body;
 
-  try {
-    const updateQuery = `
+	try {
+		const updateQuery = `
       UPDATE products
       SET name = $1,
           price = $2,
@@ -80,20 +79,43 @@ export const updateProduct = async (req, res) => {
       RETURNING *;
     `;
 
-    const values = [name, price, description, image, quantity, id];
+		const values = [name, price, description, image, quantity, id];
 
-    const result = await pool.query(updateQuery, values);
+		const result = await pool.query(updateQuery, values);
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Product not found" });
-    }
+		if (result.rows.length === 0) {
+			return res.status(404).json({ message: 'Product not found' });
+		}
 
-    res.status(200).json({
-      message: "Product updated successfully",
-      product: result.rows[0],
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
+		res.status(200).json({
+			message: 'Product updated successfully',
+			product: result.rows[0],
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: 'Server error', error: error.message });
+	}
+};
+
+export const deleteProduct = async (req, res) => {
+	const { id } = req.params;
+
+	try {
+		const result = await pool.query(
+			'DELETE FROM products WHERE id = $1 RETURNING *',
+			[id],
+		);
+
+		if (result.rowCount === 0) {
+			return res.status(404).json({ message: 'Product not found' });
+		}
+
+		res.status(200).json({
+			message: 'Product deleted successfully',
+			product: result.rows[0],
+		});
+	} catch (error) {
+		console.error('Error deleting product:', error);
+		res.status(500).json({ message: 'Server error', error: error.message });
+	}
 };

@@ -1,99 +1,88 @@
-# Dashboard Documentation
+# Dashboard Application
 
-## Table of Contents
-1. [Home](#home)
-2. [Product](#product)
-3. [Add Product](#add-product)
-4. [Update Product](#update-product)
+A modern web-based dashboard designed for administrators to manage products effectively. The system includes features for viewing metrics, adding and updating products, and tracking sales data.
 
----
+## 🚀 Features
 
-## Home
-The **Home** page provides a quick summary of key metrics and performance data. It includes:
-- **Number of Products**: Displays the total number of products available in the system.
-- **Inward Products**: Shows the total number of products added to the system.
-- **Sale Products**: Displays the total number of products sold.
-- **Sales Per Week**: A graph or chart that tracks sales trends by week.
+- **Interactive Home View**: Displays key metrics like total products, inward/outward shipments, and sales trends.
+- **Product Management**: Full CRUD (Create, Read, Update, Delete) operations for product catalog.
+- **Responsive Design**: Built with React and Vite for a fast, responsive UI.
+- **RESTful API**: Backend server handles data operations using Node.js and Express.
 
-**Features:**
-- Quick overview of products and sales performance.
-- Visual representation of sales data over the last few weeks.
-- Easy access to other sections like Product, Add Product, and Update Product.
+## 📁 Repository Structure
 
-**Example Layout:**
+```
+DashBoard/
+├── Dash_Board/            # Frontend application (React + Vite)
+│   ├── src/               # React components and pages
+│   ├── config/            # Axios configuration
+│   └── ...                # Vite configuration, package.json, etc.
+└── Server/                # Backend server (Node.js + Express)
+    ├── config/            # Database connection and settings
+    ├── Controller/        # Route handlers and business logic
+    └── Routes/            # Express routers
+```
 
-| Metric            | Value |
-|-------------------|-------|
-| Total Products    | 150   |
-| Inward Products   | 50    |
-| Sold Products     | 100   |
+## 🛠️ Tech Stack
 
-**Sales Per Week Graph:**
-- Displays sales trends over the past 7 days (or as configured).
+- **Frontend:** React, Vite, Axios, CSS modules
+- **Backend:** Node.js, Express, MongoDB (mongoose)
+- **Tools:** ESLint, Prettier, npm
 
----
+## 🧩 Installation & Setup
 
-## Product
-The **Product** page displays detailed information about all products in the system. It allows users to:
-- View a list of all products with key details.
-- Sort and filter the list based on different parameters (e.g., category, price).
-- Perform actions like viewing product details or navigating to the update page.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Umesh-0010/DashBoard.git
+   cd DashBoard
+   ```
 
-**Features:**
-- **Product Listing**: Displays product name, category, price, stock, and other relevant details.
-- **Actions**: Options to view product details or update products.
-- **Search & Filter**: Ability to search products by name, category, price, and stock.
+2. **Install frontend dependencies**
+   ```bash
+   cd Dash_Board
+   npm install
+   npm run dev          # starts Vite dev server
+   ```
 
-**Example Table Structure:**
+3. **Install backend dependencies**
+   ```bash
+   cd ../Server
+   npm install
+   npm start            # starts Express server on configured port
+   ```
 
-| Product Name   | Category    | Price | Stock | Actions |
-|----------------|-------------|-------|-------|---------|
-| Product A      | Category 1  | $10   | 50    | View / Update |
-| Product B      | Category 2  | $20   | 30    | View / Update |
-| Product C      | Category 3  | $15   | 100   | View / Update |
+4. **Configure environment variables**
+   - Create a `.env` file in `Server/` with `MONGO_URI`, `PORT`, etc.
+   - Adjust frontend API base URL in `Dash_Board/config/Axcious.js` if needed.
 
----
+## 📌 Usage
 
-## Add Product
-The **Add Product** page allows administrators to add new products to the system. The following form is required:
+- Navigate to `http://localhost:5173` (or the port shown by Vite) to access the dashboard.
+- Use the navigation bar to switch between Home, Products, Add Product, and Update Product pages.
+- The backend exposes endpoints under `/admin` (see `Server/Routes/AdminRoutes.js`).
 
-**Form Fields:**
-- **Product Name**: Name of the product.
-- **Category**: Category to which the product belongs.
-- **Price**: Price of the product.
-- **Stock**: Quantity of the product available.
-- **Description**: Detailed description of the product.
-- **Product Image**: Option to upload an image of the product.
-  
-**Submit Button:**
-- Adds the new product to the system once all required fields are completed.
+## 💡 Development Tips
 
-**Example:**
-- Fill in the required product information and click "Add Product" to submit.
+- Frontend hot-reloads on file changes via Vite.
+- Backend will restart automatically if you use `nodemon` (install globally or as dev dependency).
+- Run ESLint with `npm run lint` from either folder to catch style issues.
 
----
+## 🧪 Testing
 
-## Update Product
-The **Update Product** page allows administrators to modify product details or delete products from the system.
+Currently, no automated test suite is included. Unit and integration tests are welcome contributions.
 
-**Editable Fields:**
-- **Product Name**: Modify the name of the product.
-- **Category**: Change the product's category.
-- **Price**: Update the price of the product.
-- **Stock**: Change the quantity of the product in stock.
-- **Description**: Modify the product's description.
-- **Product Image**: Replace or remove the product image.
+## 🤝 Contributing
 
-**Actions:**
-- **Save Changes**: Updates the product details in the system.
-- **Delete Product**: Deletes the product from the system permanently.
+1. Fork the repository
+2. Create a new branch (`feature/your-feature`)
+3. Commit your changes with clear messages
+4. Open a pull request and describe your updates
 
-**Example:**
-- To update a product, simply click on the "Update" button from the Product listing and modify the details.
-- To delete a product, click on the "Delete" button.
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## Conclusion
-This dashboard enables administrators to manage the entire product lifecycle, from adding new products to updating and deleting existing ones. The Home page provides quick insights into overall performance, while the Product page allows for comprehensive product management.
+Thank you for using the Dashboard application! Feel free to reach out with questions or issues.
 

@@ -1,4 +1,11 @@
+
+import dotenv from 'dotenv';
+dotenv.config({quiet:true})
+
 import pool from '../config/database.js';
+
+
+
 
 export const createProduct = async (req, res) => {
 	const { name, price, description, image, quantity } = req.body;

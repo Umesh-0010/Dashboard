@@ -1,0 +1,176 @@
+import React, { useState } from 'react';
+
+import {SingIN, login} from '../../config/Axcious'
+
+function SignIn() {
+  const [page, setPage] = useState('register');
+  const [registerData, setRegisterData] = useState({
+    name: '',
+    phone_number: '',
+    registration_id: '',
+    email: '',
+    password: ''
+  });
+
+  const [loginData, setLoginData] = useState({
+    registration_id: '',
+    password: ''
+  });
+
+ 
+  const handleRegisterChange = (e) => {
+    const { name, value } = e.target;
+    setRegisterData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+ 
+  const handleRegisterSubmit = (e) => {
+    e.preventDefault();
+	
+    console.log("Registering:", registerData);
+    
+  };
+
+ 
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    console.log("Logging in:", loginData);
+    
+  };
+
+  const Sign_Up = ()=>{
+	
+  }
+
+  return (
+    <>
+      <div className="flex items-center justify-center gap-8 h-screen w-full p-8 bg-black/60 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="relative w-full max-w-md bg-linear-to-br from-blue-500 via-indigo-600 to-purple-700 shadow-2xl rounded-xl overflow-hidden p-6 md:p-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-white text-center drop-shadow-lg">
+            {page === 'register' ? 'Sign-Up' : 'Login'}
+          </h2>
+
+          {page === 'register' && (
+            <form onSubmit={handleRegisterSubmit} className="flex flex-col gap-4">
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                required
+                value={registerData.name}
+                onChange={handleRegisterChange}
+                className="p-2 border rounded outline-none border-gray-300 text-white"
+              />
+
+              <input
+                type="tel"
+                name="phone_number"
+                placeholder="Phone Number"
+                required
+                value={registerData.phone_number}
+                onChange={handleRegisterChange}
+                className="p-2 border rounded outline-none border-gray-300 text-white"
+              />
+
+              <input
+                type="text"
+                name="registration_id"
+                placeholder="Registration ID"
+                required
+                value={registerData.registration_id}
+                onChange={handleRegisterChange}
+                className="p-2 border rounded outline-none border-gray-300 text-white"
+              />
+
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                required
+                value={registerData.email}
+                onChange={handleRegisterChange}
+                className="p-2 border rounded outline-none border-gray-300 text-white"
+              />
+
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                value={registerData.password}
+                onChange={handleRegisterChange}
+                className="p-2 border rounded outline-none border-gray-300 text-white"
+              />
+
+              <button
+			  	onClick={Sign_Up}
+                type="submit"
+                className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-xl transition-colors"
+              >
+                Sign-Up
+              </button>
+
+              <p
+                className="text-sm text-blue-200 mt-4 cursor-pointer text-center hover:underline"
+                onClick={() => setPage('login')}
+              >
+                Already have an account? Login
+              </p>
+            </form>
+          )}
+
+          {page === 'login' && (
+            <form onSubmit={handleLoginSubmit} className="flex flex-col gap-4">
+              <input
+                type="text"
+                name="registration_id"
+                placeholder="Registration ID"
+                required
+                value={loginData.registration_id}
+                onChange={handleLoginChange}
+                className="p-2 border rounded outline-none border-gray-300 text-white"
+              />
+
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                value={loginData.password}
+                onChange={handleLoginChange}
+                className="p-2 border rounded outline-none border-gray-300 text-white"
+              />
+
+              <button
+                type="submit"
+                className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-xl transition-colors"
+              >
+                Login
+              </button>
+
+              <p
+                className="text-sm text-blue-200 mt-4 cursor-pointer text-center hover:underline"
+                onClick={() => setPage('register')}
+              >
+                Don’t have an account? Sign-Up
+              </p>
+            </form>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default SignIn;

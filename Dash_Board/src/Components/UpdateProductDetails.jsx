@@ -42,13 +42,16 @@ function UpdatePageDetails() {
 	}
 
 	return (
-		<div className="flex items-start justify-center gap-8 h-screen w-full p-8 bg-black/60 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-			<div className="max-w-sm w-full bg-white border border-gray-200 rounded-lg shadow-md p-6">
-				<img
+		<div className="flex items-center justify-center gap-8 h-screen w-full p-8 bg-black/60 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+			<div className="max-w-sm h-135 w-95.75 bg-white border border-gray-200 rounded-lg shadow-md p-6">
+				<div className=' h-59.25 p-3'>
+					<img
 					src={product.image}
 					alt={product.name}
-					className="w-full h-64 object-cover rounded-md mb-4"
+					className="h-50 w-fit object-fill rounded-md mb-4"
 				/>
+				</div>
+				
 				<h2 className="text-xl font-semibold text-gray-800 mb-2">
 					{product.name}
 				</h2>

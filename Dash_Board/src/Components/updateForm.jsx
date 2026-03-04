@@ -67,11 +67,11 @@ function UpdateForm({ productId: propProductId, onCancel, onUpdated }) {
 
   return (
     <div>
-      <div className="max-w-sm w-full bg-white border border-gray-200 rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+      <div className="max-w-sm h-135 w-95.75 bg-white border border-gray-200 rounded-lg shadow-md p-3">
+        <h2 className="text-xl font-semibold text-gray-800 mb-2">
           Update Product
         </h2>
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-2">
           <div>
             <label className="block text-gray-700 mb-1">Name:</label>
             <input
@@ -97,7 +97,7 @@ function UpdateForm({ productId: propProductId, onCancel, onUpdated }) {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full border border-gray-300 rounded-md p-2"
+              className="w-full border border-gray-300 rounded-md p-2 noschrollbar"
             />
           </div>
 

@@ -6,6 +6,7 @@ import AddProduct from '../Pages/AddProduct';
 import Update from '../Pages/Update';
 import UpdatePageDetails from './UpdateProductDetails';
 import Delete from './Delete';
+import SignIn from '../Pages/SingIn';
 
 function Main() {
 	return (
@@ -34,6 +35,10 @@ function Main() {
 				<Route
 					path="/Delete/:id"
 					element={<Delete />}
+				/>
+				<Route
+					path="/SingIn"
+					element={<SignIn />}
 				/>
 			</Routes>
 		</div>

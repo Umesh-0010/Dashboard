@@ -5,6 +5,24 @@ const axiosInstance = axios.create({
 	baseURL: 'http://localhost:3000',
 });
 
+export const registerUser = async (registerData) => {
+	try {
+		const response = await axiosInstance.post('/users', registerData);
+		return response.data;   
+	} catch (error) {
+		throw error.response?.data?.message || "An error occurred";
+	}
+};
+
+export const loginUser = async (loginData) => {
+	try {
+		const response = await axiosInstance.post('/users/Login', loginData);
+		return response.data;   
+	} catch (error) {
+		throw error.response?.data?.message || "An error occurred";
+	}
+};
+
 export const GetProduct = async () => {
 	try {
 		const response = await axiosInstance.get('/admin/product');

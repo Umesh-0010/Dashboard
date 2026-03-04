@@ -5,6 +5,9 @@ const links = [
   { id: 2, name: 'Products', path: '/Product' },
   { id: 3, name: 'Add Product', path: '/addProduct' },
   { id: 4, name: 'Update', path: '/update' },
+  { id: 5, name: 'SingIn', path: '/SingIn' },
+  
+  
   
 ];
 

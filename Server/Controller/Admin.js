@@ -28,8 +28,6 @@ export const createProduct = async (req, res) => {
 	}
 };
 
-
-
 export const getAllProducts = async (req, res) => {
 	try {
 		const result = await pool.query('SELECT * FROM products');
@@ -45,60 +43,57 @@ export const getAllProducts = async (req, res) => {
 	}
 };
 
+export const getAProducts = async (req, res) => {
+	const { id } = req.params;
+	
 
-export const getProductsToUpdate = async (req, res) => {
 	try {
-		const result = await pool.query('SELECT * FROM products');
+		const result = await pool.query(
+			'SELECT * FROM products WHERE id = $1',
+			[parseInt(id)],
+		);
 
 		if (result.rows.length === 0) {
-			return res.status(404).json({ message: 'No products found' });
+			return res.status(404).json({ message: 'Product not found' });
 		}
 
-		res.status(200).json(result.rows);
+		return res.status(200).json(result.rows[0]);
 	} catch (error) {
 		console.error(error);
-		res.status(500).json({ message: 'Error fetching products' });
+		return res.status(500).json({ message: 'Error fetching product' });
 	}
 };
 
-
-
-
-
 export const updateProduct = async (req, res) => {
-  const { id } = req.params; 
-  const { name, description, price, image,  } = req.body; 
-
-  // Validate that the required fields are provided
-  if (!name || !description || !price || !image) {
-    return res.status(400).json({ message: 'All fields (name, description, price) are required.' });
-  }
+  const { id } = req.params;
+  const { name, price, description, image, quantity } = req.body;
 
   try {
-    // Query to update the product in the database
-    const result = await pool.query(
-      'UPDATE products SET name = $1, description = $2, price = $3 WHERE id = $4 RETURNING *',
-      [name, description, price, id]
-    );
+    const updateQuery = `
+      UPDATE products
+      SET name = $1,
+          price = $2,
+          description = $3,
+          image = $4,
+          quantity = $5
+      WHERE id = $6
+      RETURNING *;
+    `;
 
-    // If no product with the given ID is found
+    const values = [name, price, description, image, quantity, id];
+
+    const result = await pool.query(updateQuery, values);
+
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: `Product with ID ${id} not found` });
+      return res.status(404).json({ message: "Product not found" });
     }
 
-    // Return the updated product as a JSON response
-    res.status(200).json(result.rows[0]);
+    res.status(200).json({
+      message: "Product updated successfully",
+      product: result.rows[0],
+    });
   } catch (error) {
-    // Log the error and send a 500 server error response
     console.error(error);
-    res.status(500).json({ message: 'Error updating product' });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-
-
-
-
-
-
-
-

@@ -1,49 +1,57 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { GetProductWithId } from '../../config/Axcious';
+import UpdateForm from './updateForm';
 
 function UpdatePageDetails() {
-	const products = [
-		{
-			id: 5,
-			name: 'Mechanical Keyboard',
-			price: 89.99,
-			description:
-				'Durable mechanical keyboard with tactile switches and backlighting.',
-			image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLfQYVl9EhwW4UMUXto_GVpwi_29pWVTWZLQ&s',
-			quantity: 8,
-		},
-	];
+	const { id } = useParams();
+	const [product, setProduct] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
 
-	const product = products[0];
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				if (!id) {
+					setError('No product ID provided');
+					setLoading(false);
+					return;
+				}
+				const data = await GetProductWithId(id);
+				setProduct(data);
+			} catch (err) {
+				setError('Failed to load product.');
+			} finally {
+				setLoading(false);
+			}
+		};
 
-	// State for form inputs
-	const [name, setName] = useState(product.name);
-	const [price, setPrice] = useState(product.price);
-	const [image, setImage] = useState(product.image);
-	const [description, setDescription] = useState(product.description);
+		fetchData();
+	}, [id]);
 
-	const handleUpdate = () => {
-		
-		console.log('Updated Product:', { name, price, image, description });
-		alert('Product updated successfully!');
-	};
+	if (loading) {
+		return <div className="text-center mt-10">Loading...</div>;
+	}
 
-	const handleCancel = () => {
-		setName(product.name);
-		setPrice(product.price);
-		setImage(product.image);
-		setDescription(product.description);
-	};
+	if (error) {
+		return <div className="text-center mt-10 text-red-500">{error}</div>;
+	}
+
+	if (!product) {
+		return (
+			<div className="text-center mt-10 text-red-500">
+				No product data found.
+			</div>
+		);
+	}
 
 	return (
-<div className="flex items-start justify-center gap-8 h-screen w-full p-8 bg-black/60 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-			
-			<div
-				key={product.id}
-				className="max-w-sm w-full bg-white border border-gray-200 rounded-lg shadow-md p-6">
+		<div className="flex items-start justify-center gap-8 h-screen w-full p-8 bg-black/60 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+			<div className="max-w-sm w-full bg-white border border-gray-200 rounded-lg shadow-md p-6">
 				<img
 					src={product.image}
 					alt={product.name}
-					className="w-100% h-100% object-cover rounded-md mb-4"
+					className="w-full h-64 object-cover rounded-md mb-4"
 				/>
 				<h2 className="text-xl font-semibold text-gray-800 mb-2">
 					{product.name}
@@ -60,79 +68,15 @@ function UpdatePageDetails() {
 				</div>
 			</div>
 
-			
-			<div className="max-w-sm w-full bg-white border border-gray-200 rounded-lg shadow-md p-6 flex flex-col justify-between">
-				<h2 className="text-xl font-semibold text-gray-800 mb-4">
-					Update Product
-				</h2>
-				<form className="flex flex-col gap-4 flex-1">
-					<div>
-						<label className="block text-gray-700 mb-1">
-							Name:
-						</label>
-						<input
-							type="text"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
-							className="w-full border border-gray-300 rounded-md p-2"
-						/>
-					</div>
-
-					<div>
-						<label className="block text-gray-700 mb-1">
-							Price:
-						</label>
-						<input
-							type="number"
-							value={price}
-							onChange={(e) =>
-								setPrice(parseFloat(e.target.value))
-							}
-							className="w-full border border-gray-300 rounded-md p-2"
-						/>
-					</div>
-
-					<div>
-						<label className="block text-gray-700 mb-1">
-							Description:
-						</label>
-						<textarea
-							value={description}
-							onChange={(e) => setDescription(e.target.value)}
-							className="w-full border border-gray-300 rounded-md p-2"
-							required
-						/>
-					</div>
-
-					<div>
-						<label className="block text-gray-700 mb-1">
-							Image URL:
-						</label>
-						<input
-							type="text"
-							value={image}
-							onChange={(e) => setImage(e.target.value)}
-							className="w-full border border-gray-300 rounded-md p-2"
-						/>
-					</div>
-
-					<div className="flex gap-4 mt-4">
-						<button
-							type="button"
-							onClick={handleUpdate}
-							className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-							Update
-						</button>
-						<button
-							type="button"
-							onClick={handleCancel}
-							className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400">
-							Cancel
-						</button>
-					</div>
-				</form>
-			</div>
-
+			<UpdateForm
+				productId={id}
+				onCancel={() => window.history.back()}
+				onUpdated={(updated) => {
+					if (updated) {
+						setProduct(prev => ({ ...prev, ...(updated.product || updated) }));
+					}
+				}}
+			/>
 		</div>
 	);
 }

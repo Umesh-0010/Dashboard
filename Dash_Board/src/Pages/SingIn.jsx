@@ -50,7 +50,7 @@ function SignIn() {
 				id: '',
 				password: '',
 			});
-			navigate('/')
+			navigate('/Home')
 		} catch (error) {
 			console.error('Error adding product:', error);
 		}
@@ -67,7 +67,7 @@ function SignIn() {
 				name: '',
 				password: '',
 			});
-			navigate('/')
+			navigate('/Home')
 
 		} catch (error) {
 			console.log(error);

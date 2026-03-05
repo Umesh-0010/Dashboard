@@ -52,7 +52,7 @@ DashBoard/
    ```
 
 4. **Configure environment variables**
-   - Create a `.env` file in `Server/` with `MONGO_URI`, `PORT`, etc.
+   - Create a `.env` file in `Server/` with `PostgresSQL`, `PORT`, etc.
    - Adjust frontend API base URL in `Dash_Board/config/Axcious.js` if needed.
 
 ## 📌 Usage

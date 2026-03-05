@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 import pool from '../config/database.js';
 import dotenv from 'dotenv';
@@ -51,6 +52,17 @@ export const adminSignIn = async (req, res) => {
 			hashedPassword,
 		]);
 
+		const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+			expiresIn: '1d',
+		});
+
+		res.cookie('token', token, {
+			httpOnly: true,
+			secure: false, // true in production
+			sameSite: 'lax',
+			maxAge: 24 * 60 * 60 * 1000,
+		});
+
 		if (result.rowCount > 0) {
 			return res.status(201).json({
 				message: 'Admin Id created successfully',
@@ -82,7 +94,6 @@ export const adminLogIn = async (req, res) => {
 		if (checkIdResult.rowCount === 0) {
 			return res.status(400).json({ message: 'Invalid ID or password' });
 		}
-		console.log('fffff');
 
 		const user = checkIdResult.rows[0];
 		const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -90,6 +101,16 @@ export const adminLogIn = async (req, res) => {
 		if (!isPasswordValid) {
 			return res.status(400).json({ message: 'Invalid ID or password' });
 		}
+		const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+			expiresIn: '1d',
+		});
+
+		res.cookie('token', token, {
+			httpOnly: true,
+			secure: false, 
+			sameSite: 'lax',
+			maxAge: 24 * 60 * 60 * 1000,
+		});
 
 		return res.status(200).json({
 			message: 'Login successful',

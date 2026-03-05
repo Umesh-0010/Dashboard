@@ -13,7 +13,7 @@ function Main() {
 		<div className="w-[248.5px] h-full">
 			<Routes>
 				<Route
-					path="/"
+					path="/Home"
 					element={<HomePage />}
 				/>
 				<Route
@@ -37,7 +37,7 @@ function Main() {
 					element={<Delete />}
 				/>
 				<Route
-					path="/SingIn"
+					path="/"
 					element={<SignIn />}
 				/>
 			</Routes>
